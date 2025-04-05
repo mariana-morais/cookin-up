@@ -1,12 +1,19 @@
 <script lang="ts">
 import { getCategories } from '@/http/index';
+import type ICategory from '@/interfaces/ICategory';
+import CardCategory from './CardCategory.vue';
 
 export default {
+  components: { CardCategory },
     data() {
         return {
-            categories: getCategories()
+            categories: [] as ICategory[]
         }
-    }
+    },
+    async created() {
+      this.categories = await getCategories();
+    },
+    emits: ['addIngredient', 'removeIngredient' ]
 }
 </script>
 
@@ -20,8 +27,8 @@ export default {
         </p>
 
         <ul class="categories">
-            <li v-for="category in categories" :key="category.name">
-                {{ category.name }}
+            <li v-for="category in categories" :key="category.nome">
+                <CardCategory :category="category" @add-ingredient="$emit('addIngredient', $event)" @remove-ingredient="$emit('removeIngredient', $event)" />
             </li>
         </ul>
 

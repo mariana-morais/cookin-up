@@ -1,102 +1,89 @@
 <script lang="ts">
-    import SelectIngredients from './SelectIngredients.vue';
+import SelectIngredients from "./SelectIngredients.vue";
+import Tag from "./Tag.vue";
+import TagList from "./TagList.vue";
 
-    export default {
-        data() {
-            return {
-                ingredients: ['Alho', 'Manteiga', 'Orégano']
-            }
-        },
-        components: {
-            SelectIngredients
-        }
+export default {
+  data() {
+    return {
+      ingredients: [] as string[],
+    };
+  },
+  components: {
+    SelectIngredients,
+    Tag,
+    TagList,
+  },
+  methods: {
+    addIngredient(ingredient: string) {
+      this.ingredients.push(ingredient)
+    },
+    removeIngredient(ingredient: string) {
+      this.ingredients = this.ingredients.filter(list => list !== ingredient);
     }
+  }
+};
 </script>
 
 <template>
-    <main class="main-content">
-        <section>
-            <span class="subtitle-lg list-text">
-                Sua lista:
-            </span>
-
-            <ul v-if="ingredients.length" class="list-ingredients">
-                <li v-for="ingredient in ingredients" :key="ingredient" class="ingredient">
-                    {{ ingredient }}
-                </li>
-            </ul>
-
-            <p v-else class="paragraph empty-list">
-                <img src="../assets/images/icones/lista-vazia.svg" alt="Ícone de pesquisa">
-                Sua lista está vazia, selecione ingredientes para iniciar!
-            </p>
-        </section>
-
-        <SelectIngredients />
-    </main>
+  <main class="main-content">
+    <TagList :ingredients="ingredients" />
+    <SelectIngredients
+      @add-ingredient="addIngredient"
+      @remove-ingredient="removeIngredient"
+    />
+  </main>
 </template>
 
 <style scoped>
-    .main-content {
-        padding: 6.5rem 7.5rem;
-        border-radius: 3.75rem 3.75rem 0rem 0rem;
-        background: var(--cream, #FFFAF3);
-        color: var(--grey, #444);
+.main-content {
+  padding: 6.5rem 7.5rem;
+  border-radius: 3.75rem 3.75rem 0rem 0rem;
+  background: var(--cream, #fffaf3);
+  color: var(--grey, #444);
 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5rem;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+}
 
-    .list-text {
-        color: var(--coral, #F0633C);
-        display: block;
-        text-align: center;
-        margin-bottom: 1.5rem;
-    }
+.list-text {
+  color: var(--coral, #f0633c);
+  display: block;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
 
-    .list-ingredients {
-        display: flex;
-        justify-content: center;
-        gap: 1rem 1.5rem;
-        flex-wrap: wrap;
-    }
+.list-ingredients {
+  display: flex;
+  justify-content: center;
+  gap: 1rem 1.5rem;
+  flex-wrap: wrap;
+}
 
-    .ingredient {
-        display: inline-block;
-        border-radius: 0.5rem;
-        min-width: 4.25rem;
-        padding: 0.5rem;
-        text-align: center;
-            transition: 0.2s;
-            color: var(--cream, #FFFAF3);
-        background: var(--coral, #F0633C);
-        font-weight: 700;
-    }
+.empty-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
 
-    .empty-list {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.25rem;
+  color: var(--coral, #f0633c);
+  text-align: center;
+}
 
-        color: var(--coral, #F0633C);
-        text-align: center;
-    }
+@media only screen and (max-width: 1300px) {
+  .main-content {
+    padding: 5rem 3.75rem;
+    gap: 3.5rem;
+  }
+}
 
-    @media only screen and (max-width: 1300px) {
-        .main-content {
-            padding: 5rem 3.75rem;
-            gap: 3.5rem;
-        }
-    }
-
-    @media only screen and (max-width: 767px) {
-        .main-content {
-            padding: 4rem 1.5rem;
-            gap: 4rem;
-        }
-    }
+@media only screen and (max-width: 767px) {
+  .main-content {
+    padding: 4rem 1.5rem;
+    gap: 4rem;
+  }
+}
 </style>
