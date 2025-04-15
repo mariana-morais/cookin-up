@@ -2,9 +2,11 @@
 import { getCategories } from '@/http/index';
 import type ICategory from '@/interfaces/ICategory';
 import CardCategory from './CardCategory.vue';
+import MainButton from './MainButton.vue';
 
 export default {
-  components: { CardCategory },
+  name: 'SelectIngredients',
+  components: { CardCategory, MainButton },
     data() {
         return {
             categories: [] as ICategory[]
@@ -13,14 +15,13 @@ export default {
     async created() {
       this.categories = await getCategories();
     },
-    emits: ['addIngredient', 'removeIngredient' ]
+    emits: ['addIngredient', 'removeIngredient', 'searchRecipes' ]
 }
 </script>
 
 <template>
-    <setion class="select-ingredients">
+    <section class="select-ingredients">
         <h1 class="header ingredients-title">Ingredientes</h1>
-
 
         <p class="paragraph-lg instructions">
             Selecione abaixo os ingredientes que você quer usar nesta receita:
@@ -35,7 +36,9 @@ export default {
         <p class="paragraph hint">
             *Atenção: consideramos que você tem em casa sal, pimenta e água.
         </p>
-    </setion>
+
+        <MainButton text="Buscar receitas!" @click="$emit('searchRecipes')" />
+    </section>
 </template>
 
 <style scoped>

@@ -4,7 +4,7 @@ import Tag from "./Tag.vue";
 export default {
   components: { Tag },
   props: {
-    ingredient: {
+    ingrediente: {
       type: String,
       required: true,
     },
@@ -19,9 +19,9 @@ export default {
       this.selected = !this.selected;
 
       if(this.selected) {
-        this.$emit('addIngredient', this.ingredient);
+        this.$emit('addIngredient', this.ingrediente);
       } else {
-        this.$emit('removeIngredient', this.ingredient);
+        this.$emit('removeIngredient', this.ingrediente);
       }
     }
   },
@@ -35,7 +35,7 @@ export default {
     @click="thenClick"
     :aria-pressed="selected"
   >
-    <Tag :text="ingredient" :active="selected" />
+    <Tag :text="ingrediente" :active="selected" />
   </button>
 </template>
 

@@ -1,37 +1,57 @@
 <script lang="ts">
 import SelectIngredients from "./SelectIngredients.vue";
+import ShowRecipes from "./ShowRecipes.vue";
 import Tag from "./Tag.vue";
 import TagList from "./TagList.vue";
+
+type Page = 'SelectIngredients' | 'ShowRecipes'
 
 export default {
   data() {
     return {
-      ingredients: [] as string[],
+      ingredientes: [] as string[],
+      content: 'SelectIngredients' as Page,
     };
+  },
+  methods: {
+    addIngredient(ingrediente: string) {
+      this.ingredientes.push(ingrediente)
+    },
+    removeIngredient(ingrediente: string) {
+      this.ingredientes = this.ingredientes.filter(list => list !== ingrediente);
+    },
+    navigate(page: Page) {
+      this.content = page;
+    }
   },
   components: {
     SelectIngredients,
     Tag,
     TagList,
+    ShowRecipes
   },
-  methods: {
-    addIngredient(ingredient: string) {
-      this.ingredients.push(ingredient)
-    },
-    removeIngredient(ingredient: string) {
-      this.ingredients = this.ingredients.filter(list => list !== ingredient);
-    }
-  }
 };
 </script>
 
 <template>
   <main class="main-content">
-    <TagList :ingredients="ingredients" />
-    <SelectIngredients
-      @add-ingredient="addIngredient"
-      @remove-ingredient="removeIngredient"
-    />
+    <TagList :ingredientes="ingredientes" />
+
+    <KeepAlive include="SelectIngredients">
+      <SelectIngredients
+        v-if="content === 'SelectIngredients'"
+        @add-ingredient="addIngredient"
+        @remove-ingredient="removeIngredient"
+        @search-recipes="navigate('ShowRecipes')"
+      />
+
+      <ShowRecipes
+        v-else-if="content === 'ShowRecipes'"
+        :ingredientes="ingredientes"
+        @edit-recipes="navigate('SelectIngredients')"
+      />
+    </KeepAlive>
+
   </main>
 </template>
 

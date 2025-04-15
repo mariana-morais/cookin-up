@@ -5,13 +5,13 @@ import Tag from "./Tag.vue";
 import SelectIngredient from "./SelectIngredient.vue";
 
 export default {
-  components: { Tag, SelectIngredient },
   props: {
     category: {
       type: Object as PropType<ICategory>,
       required: true,
     },
   },
+  components: { Tag, SelectIngredient },
   emits: ["addIngredient", "removeIngredient"],
 };
 </script>
@@ -20,22 +20,23 @@ export default {
   <article class="category">
     <header class="category__header">
       <img
-        :src="`/images/icones/categorias_ingredientes/${category.imagem}`"
+        :src="`/images/icones/categorias_ingredientes/${category.rotulo}.png`"
         :alt="`${category.nome}`"
         class="category__image"
       />
+
       <h2 class="paragraph-lg category__name">
         {{ category.nome }}
       </h2>
     </header>
     <ul class="category__ingredients">
       <li
-        v-for="ingredient in category.ingredientes"
-        :key="ingredient"
+        v-for="ingrediente in category.ingredientes"
+        :key="ingrediente"
         class="category__ingredient"
       >
         <SelectIngredient
-          :ingredient="ingredient"
+          :ingrediente="ingrediente"
           @add-ingredient="$emit('addIngredient', $event)"
           @remove-ingredient="$emit('removeIngredient', $event)"
         />

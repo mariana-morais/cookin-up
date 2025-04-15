@@ -5,7 +5,7 @@
     export default {
         components: { Tag },
         props: {
-            ingredients : {
+            ingredientes : {
                 type: Array as PropType<string[]>,
                 required: true
             }
@@ -19,9 +19,9 @@
             Sua lista:
         </span>
 
-        <ul v-if="ingredients.length" class="list-ingredients">
-            <li v-for="ingredient in ingredients" :key="ingredient">
-                <tag :text="ingredient" active />
+        <ul v-if="ingredientes.length" class="list-ingredients">
+            <li v-for="ingrediente in ingredientes" :key="ingrediente">
+                <tag :text="ingrediente" active />
             </li>
         </ul>
 

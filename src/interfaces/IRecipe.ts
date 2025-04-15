@@ -1,6 +1,5 @@
-export default interface ICategory {
+export default interface IRecipe {
     nome: string;
     ingredientes: string[];
     imagem: string;
-    rotulo: string;
 }
